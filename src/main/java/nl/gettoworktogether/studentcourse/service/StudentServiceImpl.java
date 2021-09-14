@@ -2,18 +2,21 @@ package nl.gettoworktogether.studentcourse.service;
 
 import nl.gettoworktogether.studentcourse.exceptions.UserNotFoundException;
 import nl.gettoworktogether.studentcourse.model.Student;
+import nl.gettoworktogether.studentcourse.payload.StudentDto;
 import nl.gettoworktogether.studentcourse.repository.CourseRepository;
 import nl.gettoworktogether.studentcourse.repository.StudentCourseResultRepository;
 import nl.gettoworktogether.studentcourse.repository.StudentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Map;
 
-
+@Validated
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -52,6 +55,14 @@ public class StudentServiceImpl implements StudentService {
         Student storedStudent = studentRepository.save(student);
         return storedStudent.getId();
     }
+
+    @Override
+    public Student createStudent(@Valid StudentDto studentDto) {
+        Student student = new Student();
+        student.setName(studentDto.getName());
+        return studentRepository.save(student);
+    }
+
 
     @Override
     public void updateStudent(long id, Student student) {

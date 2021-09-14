@@ -49,5 +49,4 @@ public class StudentControllerTest {
         String content = result.getResponse().getContentAsString();
     }
 
-
 }
