@@ -5,6 +5,9 @@ import nl.gettoworktogether.studentcourse.model.Course;
 import nl.gettoworktogether.studentcourse.model.Student;
 import nl.gettoworktogether.studentcourse.model.StudentCourseResult;
 import nl.gettoworktogether.studentcourse.model.StudentCourseResultKey;
+import nl.gettoworktogether.studentcourse.payload.ResultDto;
+import nl.gettoworktogether.studentcourse.payload.StudentCourseResultDto;
+import nl.gettoworktogether.studentcourse.payload.StudentDto;
 import nl.gettoworktogether.studentcourse.repository.CourseRepository;
 import nl.gettoworktogether.studentcourse.repository.StudentCourseResultRepository;
 import nl.gettoworktogether.studentcourse.repository.StudentRepository;
@@ -12,11 +15,7 @@ import nl.gettoworktogether.studentcourse.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class StudentCourseResultServiceImpl implements StudentCourseResultService {
@@ -34,6 +33,34 @@ public class StudentCourseResultServiceImpl implements StudentCourseResultServic
     public Collection<StudentCourseResult> getAllResults() {
         Collection<StudentCourseResult> results = studentCourseResultRepository.findAll();
         return results;
+    }
+
+    @Override
+    public Collection<StudentCourseResultDto> getAllResults2() {
+        Collection<StudentCourseResultDto> studentCourses = new ArrayList<>();
+        for (Student student: studentRepository.findAll()){
+            StudentCourseResultDto studentCourseResultDto = new StudentCourseResultDto();
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(student.getId());
+            studentDto.setName(student.getName());
+            studentCourseResultDto.setStudent(studentDto);
+
+            Collection<StudentCourseResult> studentResults = studentCourseResultRepository.findAllByStudentId(student.getId());
+            long totalScore=0;
+            for (StudentCourseResult studentCourseResult:studentResults){
+                ResultDto resultDto = new ResultDto();
+                resultDto.setCourse(studentCourseResult.getCourse());
+                resultDto.setDate(studentCourseResult.getDate());
+                resultDto.setScore(studentCourseResult.getScore());
+                totalScore+=studentCourseResult.getScore();
+                studentCourseResultDto.getResults().add(resultDto);
+            }
+            if (studentResults.size()>0){
+                studentCourseResultDto.setAverageScore(totalScore/ (double) studentResults.size());
+            }
+            studentCourses.add(studentCourseResultDto);
+        }
+        return studentCourses;
     }
 
     @Override

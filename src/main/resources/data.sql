@@ -30,3 +30,4 @@ INSERT INTO student_course_results (course_id, student_id, date, score) VALUES (
 INSERT INTO student_course_results (course_id, student_id, date, score) VALUES ('2', '3', '2020-10-15', '8');
 INSERT INTO student_course_results (course_id, student_id, date, score) VALUES ('2', '4', '2020-10-15', '9');
 INSERT INTO student_course_results (course_id, student_id, date, score) VALUES ('2', '5', '2020-10-15', '8');
+

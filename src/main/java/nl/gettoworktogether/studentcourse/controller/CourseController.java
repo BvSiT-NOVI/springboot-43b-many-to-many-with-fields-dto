@@ -39,6 +39,12 @@ public class CourseController {
     @Autowired
     private StudentCourseResultService studentCourseResultService;
 
+    @GetMapping(value = "/students")
+    public ResponseEntity<Object> getStudentsWithCourses() {
+        return ResponseEntity.ok().body(studentCourseResultService.getAllResults2());
+    }
+
+
     @GetMapping(value = "")
     public ResponseEntity<Object> searchCourses(@RequestParam(name="name", defaultValue="") String name) {
         return ResponseEntity.ok().body(courseService.getCourses(name));
@@ -98,5 +104,7 @@ public class CourseController {
 
         return ResponseEntity.created(location).body(location);
     }
+
+
 
 }
