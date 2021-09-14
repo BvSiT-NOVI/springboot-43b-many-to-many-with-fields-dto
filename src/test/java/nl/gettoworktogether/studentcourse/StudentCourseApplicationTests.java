@@ -13,6 +13,11 @@ class StudentCourseApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+	}
+
+	@Test
+	void listAllBeans() {
 		String[] allBeanNames = applicationContext.getBeanDefinitionNames();
 		for(String beanName : allBeanNames) {
 			System.out.println(beanName);
