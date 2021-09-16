@@ -3,6 +3,7 @@ package nl.gettoworktogether.studentcourse.controller;
 import nl.gettoworktogether.studentcourse.model.Student;
 import nl.gettoworktogether.studentcourse.model.StudentCourseResult;
 import nl.gettoworktogether.studentcourse.model.StudentCourseResultKey;
+import nl.gettoworktogether.studentcourse.payload.StudentDto;
 import nl.gettoworktogether.studentcourse.service.StudentCourseResultService;
 import nl.gettoworktogether.studentcourse.service.StudentService;
 
@@ -52,6 +53,16 @@ public class StudentController {
     }
 
     @PostMapping(value = "")
+    public ResponseEntity<Object> createStudent(@RequestBody StudentDto studentDto) {
+        Student student = studentService.createStudent(studentDto);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(student.getId()).toUri();
+        //Location of the created student is returned in the header
+        return ResponseEntity.created(location).body(student);
+    }
+
+    @PostMapping(value = "obsolete")
     public ResponseEntity<Object> createStudent(@RequestBody Student student) {
         long newId = studentService.createStudent(student);
 

@@ -14,9 +14,11 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,6 +49,23 @@ public class StudentControllerTest {
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
+    }
+
+    @Test
+    void whenEmptyNameStudent_thenThrowsConstraintViolationException() throws Exception {
+        /** TODO
+         *  This will return an internal server error in the response.
+         *  How to capture this response in the test?
+         *  Now only the validation constraint exception is captured caused by the service.
+         */
+        Exception exception = assertThrows(Exception.class, () -> {
+            mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"name\":\"\"}"))
+                    .andExpect(status().isInternalServerError());
+        });
+
+        logger.info(exception.getMessage());
+
     }
 
 }

@@ -2,7 +2,7 @@ This project is based on https://github.com/PeterAnema/springboot-43-many-to-man
 
 In this branch:
 
-- mapping /courses/students returns resulted group by students with selected properties and an average note by using DTO
+- mapping /courses/students returns resulted group by students with selected properties and an average note by using DTOs
 - compare with mapping /courses/students/raw
 
 Compare with previous branch:
