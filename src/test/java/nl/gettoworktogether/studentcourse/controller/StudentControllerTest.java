@@ -27,8 +27,6 @@ public class StudentControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
-
     @Test
     void testStudentController() throws Exception {
         //Show the full request by using doPrint()
