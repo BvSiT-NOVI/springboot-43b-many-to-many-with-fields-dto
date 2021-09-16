@@ -39,11 +39,22 @@ public class CourseController {
     @Autowired
     private StudentCourseResultService studentCourseResultService;
 
+    /**
+     * @return results without group by students with selected properties
+     * and an average note by using DTO
+     */
     @GetMapping(value = "/students")
     public ResponseEntity<Object> getStudentsWithCourses() {
         return ResponseEntity.ok().body(studentCourseResultService.getAllResults2());
     }
 
+    /**
+     * @return results without group by students and with all properties returned
+     */
+    @GetMapping(value = "/students/raw")
+    public ResponseEntity<Object> getStudentsWithCoursesRaw() {
+        return ResponseEntity.ok().body(studentCourseResultService.getAllResults());
+    }
 
     @GetMapping(value = "")
     public ResponseEntity<Object> searchCourses(@RequestParam(name="name", defaultValue="") String name) {
