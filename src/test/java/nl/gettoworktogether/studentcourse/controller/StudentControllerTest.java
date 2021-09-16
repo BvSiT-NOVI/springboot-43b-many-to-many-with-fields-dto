@@ -27,8 +27,6 @@ public class StudentControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
-
     @Test
     void testStudentController() throws Exception {
         //Show the full request by using doPrint()
@@ -48,6 +46,4 @@ public class StudentControllerTest {
 
         String content = result.getResponse().getContentAsString();
     }
-
-
 }
